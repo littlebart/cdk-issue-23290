@@ -1,6 +1,6 @@
 # POC - cdk-issue-23290
 
-Version: 1.0 2022-12-14 07 GMT+01
+Version: 1.1 2022-12-14 07:30 GMT+01
 
 POC repository for reproduce aws-cdk zipping asset racecondition issue when use `cdk deploy --all --concurrency 2 ...`
 Link: https://github.com/aws/aws-cdk/issues/23290
@@ -41,10 +41,11 @@ Link: https://github.com/aws/aws-cdk/issues/23290
 
 ## Synthesis + diff part
 
-Note: cleanup `cdk.out/` if you repeat the process (when you don't hit the issue)
+Note ⚠: Always clean `cdk.out/` if you repeat the process (when you don't hit the issue), also don't forget delete `eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip` from S3 bucket `s3://cdk-issue23290-assets-*/*`, when you succesfully/partialy deploy.
 
 ```shell
 # rm -rf cdk.out/ ## optional
+# aws s3api delete-object --key eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip --bucket $(aws cloudformation describe-stacks --stack-name CDKToolkitIssue23290 --query 'Stacks[*].Outputs[?OutputKey == `BucketName`][].{value:OutputValue}' --output text) ## optional
 npm run cdk -- synth
 npm run cdk -- diff --app 'cdk.out/assembly-prod/'
 ```
