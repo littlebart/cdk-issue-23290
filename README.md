@@ -55,7 +55,7 @@ npm run cdk -- diff --app 'cdk.out/assembly-prod/'
 
 
 * use `--concurrency 2`
-* ⚠ project needs two independent stacks with lambdas using LogRetention 
+* ⚠ project needs [two independent stacks with lambdas](./lib/app-stage.ts#L22-L29) using [LogRetention](./lib/cdk-issue-23290-stack.ts#L16)
 * use `--require-approval never`
 
 
