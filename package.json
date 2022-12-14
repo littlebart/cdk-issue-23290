@@ -10,14 +10,14 @@
     "test": "jest",
     "cdk": "cdk",
     "clean-local": "rimraf cdk.out/",
-    "clean-remote": "aws cloudformation describe-stacks --stack-name CDKToolkitIssue23290 --query 'Stacks[*].Outputs[?OutputKey == `BucketName`][].{value:OutputValue}' --output text > cdk-bucket.txt && aws s3api delete-object --key eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip --bucket $(cat cdk-bucket.txt) && rm cdk-bucket.txt" 
+    "clean-remote": "aws cloudformation describe-stacks --stack-name CDKToolkitIssue23290 --query 'Stacks[*].Outputs[?OutputKey == `BucketName`][].{value:OutputValue}' --output text > cdk-bucket.txt && aws s3api delete-object --key eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip --bucket $(cat cdk-bucket.txt) && rm cdk-bucket.txt"
   },
   "devDependencies": {
     "@types/babel__traverse": "7.18.2",
     "@types/jest": "^27.5.2",
     "@types/node": "10.17.27",
     "@types/prettier": "2.6.0",
-    "aws-cdk": "2.53.0",
+    "aws-cdk": "^2.54.0",
     "jest": "^27.5.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.4",
@@ -25,7 +25,7 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.53.0",
+    "aws-cdk-lib": "^2.54.0",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
   }

@@ -1,6 +1,10 @@
 # POC - cdk-issue-23290
 
-Version: 1.2.1 2022-12-14 15:50 GMT+01
+Versions:
+* v1.3 2022-12-14 16:30 GMT+01 - upgrade to aws-cdk@2.54.0
+* v1.2.1 2022-12-14 15:50 GMT+01 - better tooling, updated README.md
+* v1.1 2022-12-14 07:30 GMT+01
+* v1.0 2022-12-14 07:00 GMT+01
 
 POC repository for reproduce aws-cdk zipping asset racecondition issue when use `cdk deploy --all --concurrency 2 ...`
 Link: https://github.com/aws/aws-cdk/issues/23290
@@ -17,15 +21,15 @@ Possibility that deploy fail on cleaned account can be above 50%
   ```
 * use `npm i`
 * installed and configured aws cli `aws --version` >= 2.5.1
-* aws-cdk >= 2.53.0
+* aws-cdk >= 2.54.0 (also 2.53.0 affected - in previous POC version)
     ```shell
     npm run cdk -- --version
 
     > cdk-issue-23290@0.1.0 cdk
     > cdk --version
 
-    2.53.0 (build 7690f43)
-    ```
+    2.54.0 (build 9f41881)
+   ```
 * typescript >= 3.9.10
     ```shell
     npm run build -- --version
