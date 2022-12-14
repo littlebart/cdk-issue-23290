@@ -1,6 +1,6 @@
 # POC - cdk-issue-23290
 
-Version: 1.2 2022-12-14 08:30 GMT+01
+Version: 1.2.1 2022-12-14 15:50 GMT+01
 
 POC repository for reproduce aws-cdk zipping asset racecondition issue when use `cdk deploy --all --concurrency 2 ...`
 Link: https://github.com/aws/aws-cdk/issues/23290
@@ -9,6 +9,7 @@ Possibility that deploy fail on cleaned account can be above 50%
 
 ## Prerequisities
 
+* system Linux (Debian or Ubuntu, also affects github pipelines)
 * node >= v16.19.0 - eg. use [nvm](https://github.com/nvm-sh/nvm) or another node version manager `nvm install 16`
   ```shell
   node --version
@@ -59,7 +60,7 @@ npm run clean-local
 npm run clean-remote
 ```
 
-## Deploy with --concurency 2 (can fail)
+## Deploy with --concurrency 2 (~50% fail)
 
 
 * use `--concurrency 2`
@@ -72,9 +73,9 @@ npm run cdk -- deploy --all --concurrency 2 --app 'cdk.out/assembly-prod/' --req
 ```
 
 This can create different states:
-* ✅ everything is ok
-* ⚠ temporal error - see ENOENT error and one of both stacks will not start to install (local temporal error), second release usually works
-* ❌ persistent error - ENOENT create corrupted `eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip`, very frustrating error, stack hangs and needs manualy Cancel update stack in cloudformation (aws console) or wait, maybe 1 to 1.5 hours waiting to go from `UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS` into `UPDATE_ROLLBACK_COMPLETE`, keep calm ;) Any other `cdk deploy` fails, always. Recovery is possible by removing corrupted `eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip` from your cdk asset S3 bucket.
+* ✅ everything is ok and succesfull deploy all stacks
+* ⚠ temporal error - see ENOENT error and one or both stacks will not start to install (local temporal error), second release usually works
+* ❌ persistent error (rare) - ENOENT create and upload corrupted `eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip` lambda asset (here LogRetention lambda but possibly any custom shared resource), very frustrating error, stack hangs and needs manual Cancel update stack in cloudformation (aws console) or wait, maybe 1 to 1.5 hours to go from `UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS` into `UPDATE_ROLLBACK_COMPLETE`, stay calm and wait ;) Any other `cdk deploy` fails, always, others projects in same account with cdk can be also affected. Recovery is possible by removing corrupted asset file `eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip` from your cdk asset S3 bucket (`npm run clean-remote`).
 
 > If everything is OK, clean-up your asset S3 bucket (error is random, but reproducible with some patience). Also remove always content of `cdk.out/` dir and run new clean `cdk synth ...` and `cdk deploy ...`
 
