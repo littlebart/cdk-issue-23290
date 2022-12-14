@@ -15,6 +15,5 @@ export class CdkIssue23290Stack extends cdk.Stack {
       handler: "index.handler",
       logRetention: RetentionDays.ONE_WEEK,
     });
-
   }
 }
