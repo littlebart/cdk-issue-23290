@@ -1,5 +1,7 @@
 # POC - cdk-issue-23290
 
+Version: 1.0 2022-12-14 07 GMT+01
+
 POC repository for reproduce aws-cdk zipping asset racecondition issue when use `cdk deploy --all --concurrency 2 ...`
 Link: https://github.com/aws/aws-cdk/issues/23290
 
