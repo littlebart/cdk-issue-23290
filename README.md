@@ -1,9 +1,11 @@
 # POC - cdk-issue-23290
 
-Version: 1.1 2022-12-14 07:30 GMT+01
+Version: 1.2 2022-12-14 08:30 GMT+01
 
 POC repository for reproduce aws-cdk zipping asset racecondition issue when use `cdk deploy --all --concurrency 2 ...`
 Link: https://github.com/aws/aws-cdk/issues/23290
+
+Possibility that deploy fail on cleaned account can be above 50%
 
 ## Prerequisities
 
@@ -13,6 +15,7 @@ Link: https://github.com/aws/aws-cdk/issues/23290
   v16.19.0
   ```
 * use `npm i`
+* installed and configured aws cli `aws --version` >= 2.5.1
 * aws-cdk >= 2.53.0
     ```shell
     npm run cdk -- --version
@@ -50,6 +53,11 @@ npm run cdk -- synth
 npm run cdk -- diff --app 'cdk.out/assembly-prod/'
 ```
 
+### Prepared clean commands
+```
+npm run clean-local
+npm run clean-remote
+```
 
 ## Deploy with --concurency 2 (can fail)
 
